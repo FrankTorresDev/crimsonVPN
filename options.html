@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crimson VPN — Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #110a0a;
+        --surface: #1a1010;
+        --surface2: #221515;
+        --surface3: #2e1b1b;
+        --border: rgba(255, 255, 255, 0.07);
+        --border-hover: rgba(255, 255, 255, 0.12);
+        --accent: #dc2626;
+        --accent-dim: rgba(220, 38, 38, 0.13);
+        --accent-glow: rgba(220, 38, 38, 0.45);
+        --danger: #f87171;
+        --danger-dim: rgba(248, 113, 113, 0.12);
+        --text: #f5eeee;
+        --text-muted: #6b4f4f;
+        --text-sub: #9e8888;
+        --radius: 14px;
+      }
+
+      body {
+        font-family: "Syne", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 40px 20px 80px;
+      }
+
+      /* Mesh bg */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 600px 400px at 0% 0%,
+            rgba(0, 245, 160, 0.04) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 500px 400px at 100% 100%,
+            rgba(79, 70, 229, 0.05) 0%,
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Page header */
+      .page-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 36px;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px var(--accent-glow);
+        flex-shrink: 0;
+      }
+
+      .logo svg {
+        width: 22px;
+        height: 22px;
+        color: #0a0a0f;
+      }
+
+      .page-header-text h1 {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      .page-header-text p {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+
+      /* Cards */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* Form */
+      .field-group {
+        margin-bottom: 14px;
+      }
+
+      .field-label {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+      }
+
+      input,
+      select {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 11px 14px;
+        color: var(--text);
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      input::placeholder {
+        color: var(--text-muted);
+        font-weight: 400;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: rgba(0, 245, 160, 0.4);
+        box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.08);
+      }
+
+      select {
+        cursor: pointer;
+        appearance: none;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 100px 130px;
+        gap: 12px;
+      }
+
+      #saveBtn {
+        width: 100%;
+        margin-top: 20px;
+        padding: 13px;
+        background: var(--accent);
+        color: #0a0a0f;
+        font-family: "Syne", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        letter-spacing: 0.03em;
+        box-shadow: 0 0 20px var(--accent-glow);
+        transition: all 0.2s ease;
+      }
+
+      #saveBtn:hover {
+        box-shadow: 0 0 28px var(--accent-glow);
+        transform: translateY(-1px);
+      }
+
+      #saveBtn:active {
+        transform: none;
+      }
+
+      /* Server list */
+      .server-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .server-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 16px;
+        transition: border-color 0.2s;
+      }
+
+      .server-item:hover {
+        border-color: var(--border-hover);
+      }
+
+      .server-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: var(--accent-dim);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .server-icon svg {
+        width: 16px;
+        height: 16px;
+        color: var(--accent);
+      }
+
+      .server-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .server-name {
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .server-meta {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .scheme-badge {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 7px;
+        border-radius: 5px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        flex-shrink: 0;
+      }
+
+      .delete-btn {
+        background: none;
+        border: 1px solid transparent;
+        color: var(--text-muted);
+        padding: 6px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: "Syne", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+
+      .delete-btn:hover {
+        background: var(--danger-dim);
+        border-color: rgba(255, 77, 109, 0.25);
+        color: var(--danger);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 28px 0 8px;
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+
+      .empty-state span {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 8px;
+        opacity: 0.4;
+      }
+
+      #saveSuccess {
+        display: none;
+        background: var(--accent-dim);
+        border: 1px solid rgba(0, 245, 160, 0.2);
+        border-radius: 10px;
+        padding: 10px 14px;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 12px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="logo">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <div class="page-header-text">
+          <h1>Crimson VPN</h1>
+          <p>Proxy Server Settings</p>
+        </div>
+      </div>
+
+      <!-- Add Server Form -->
+      <div class="card">
+        <div class="card-title">Add Server</div>
+
+        <div class="grid-3">
+          <div class="field-group">
+            <label class="field-label" for="label">Label</label>
+            <input id="label" placeholder="US East" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="scheme">Scheme</label>
+            <select id="scheme">
+              <option value="http">HTTP</option>
+              <option value="https">HTTPS</option>
+              <option value="socks5">SOCKS5</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="id">Unique ID</label>
+            <input id="id" placeholder="us-east-1" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label class="field-label" for="flag">Flag Emoji</label>
+            <input id="flag" placeholder="🇺🇸" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="region">Region</label>
+            <select id="region">
+              <option value="United States">United States</option>
+              <option value="Europe">Europe</option>
+              <option value="Asia Pacific">Asia Pacific</option>
+              <option value="Americas">Americas</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label class="field-label" for="host">Host</label>
+            <input id="host" placeholder="proxy.example.com" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="port">Port</label>
+            <input id="port" placeholder="8080" type="number" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field-group">
+            <label class="field-label" for="username">Username</label>
+            <input id="username" placeholder="Optional" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="password">Password</label>
+            <input id="password" placeholder="Optional" type="password" />
+          </div>
+        </div>
+
+        <button id="saveBtn">Save Proxy Server</button>
+        <div id="saveSuccess">✓ Server saved successfully</div>
+      </div>
+
+      <!-- Server List -->
+      <div class="card">
+        <div class="card-title">Saved Servers</div>
+        <ul class="server-list" id="serverList"></ul>
+      </div>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>
