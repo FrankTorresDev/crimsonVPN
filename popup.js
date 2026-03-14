@@ -198,3 +198,104 @@ connectBtn.addEventListener('click', async () => {
 });
 
 init();
+
+
+// ── View navigation ───────────────────────
+const viewMain  = document.getElementById('viewMain');
+const viewLogin = document.getElementById('viewLogin');
+const loginNavBtn     = document.getElementById('loginNavBtn');
+const backBtn         = document.getElementById('backBtn');
+const loginSubmitBtn  = document.getElementById('loginSubmitBtn');
+const loginBtnText    = document.getElementById('loginBtnText');
+const loginSpinner    = document.getElementById('loginSpinner');
+const loginError      = document.getElementById('loginError');
+const emailInput      = document.getElementById('emailInput');
+const passwordInput   = document.getElementById('passwordInput');
+
+function showLogin() {
+  viewMain.classList.add('view-hidden');
+  viewLogin.classList.remove('view-hidden');
+  loginError.classList.remove('visible');
+  emailInput.value = '';
+  passwordInput.value = '';
+  setTimeout(() => emailInput.focus(), 50);
+}
+
+function showMain() {
+  viewLogin.classList.add('view-hidden');
+  viewMain.classList.remove('view-hidden');
+}
+
+loginNavBtn.addEventListener('click', showLogin);
+backBtn.addEventListener('click', showMain);
+
+// Allow Enter key to submit
+[emailInput, passwordInput].forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') loginSubmitBtn.click();
+  });
+});
+
+// ── Login submit ──────────────────────────
+loginSubmitBtn.addEventListener('click', async () => {
+  const email    = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  loginError.classList.remove('visible');
+
+  if (!email || !password) {
+    loginError.textContent = 'Please enter your email and password.';
+    loginError.classList.add('visible');
+    return;
+  }
+
+  // Loading state
+  loginSubmitBtn.classList.add('loading');
+  loginSubmitBtn.disabled = true;
+
+  try {
+    // ── Replace this URL with your real backend ──
+    const res = await fetch('https://yourapi.com/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.message || 'Invalid email or password.');
+    }
+
+    const { token, user } = await res.json();
+
+    await chrome.storage.local.set({
+      sessionToken: token,
+      tokenExpiry: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      user,
+    });
+
+    // Update login button to show logged-in state
+    loginNavBtn.textContent = user.email?.split('@')[0] || 'Account';
+    loginNavBtn.style.borderColor = 'rgba(34,197,94,0.5)';
+    loginNavBtn.style.background  = 'rgba(34,197,94,0.1)';
+    loginNavBtn.style.color       = '#22c55e';
+
+    showMain();
+  } catch (err) {
+    loginError.textContent = err.message || 'Login failed. Please try again.';
+    loginError.classList.add('visible');
+  } finally {
+    loginSubmitBtn.classList.remove('loading');
+    loginSubmitBtn.disabled = false;
+  }
+});
+
+// ── Footer link stubs ─────────────────────
+document.getElementById('createAccountBtn').addEventListener('click', () => {
+  // Navigate to signup page or open external URL
+  chrome.tabs.create({ url: 'https://yoursite.com/signup' });
+});
+
+document.getElementById('resetPasswordBtn').addEventListener('click', () => {
+  chrome.tabs.create({ url: 'https://yoursite.com/reset-password' });
+});

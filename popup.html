@@ -13,11 +13,89 @@
   </head>
   <body>
     <div class="app">
-      <!-- Top bar -->
-      <div class="topbar">
-        <div class="topbar-brand">
-          <div class="shield-icon">
+      <!-- ═══════════════════════════════════ -->
+      <!--  VIEW: MAIN                         -->
+      <!-- ═══════════════════════════════════ -->
+      <div id="viewMain">
+        <!-- Top bar -->
+        <div class="topbar">
+          <div class="topbar-brand">
+            <div class="shield-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <span class="brand-name">Crimson VPN</span>
+          </div>
+          <div class="topbar-actions">
+            <button class="login-btn" id="loginNavBtn">Login</button>
+            <a
+              class="settings-btn"
+              href="options.html"
+              target="_blank"
+              title="Settings"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+          <button class="connect-btn" id="connectBtn">
+            <div class="connect-ring outer"></div>
+            <div class="connect-ring inner"></div>
+            <div class="connect-core">
+              <svg
+                class="power-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                <line x1="12" y1="2" x2="12" y2="12" />
+              </svg>
+            </div>
+          </button>
+          <div class="status-label" id="statusLabel">Tap to connect</div>
+          <div class="selected-location" id="selectedLocation">
+            <span id="selectedFlag"></span>
+            <span id="selectedName">No location selected</span>
+          </div>
+        </div>
+
+        <!-- Location picker -->
+        <div class="picker-section">
+          <div class="picker-label">Choose Location</div>
+          <div class="dropdown-trigger" id="dropdownTrigger">
+            <span class="trigger-flag" id="triggerFlag"></span>
+            <span class="trigger-name" id="triggerName"
+              >Select a location…</span
+            >
             <svg
+              class="trigger-chevron"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -25,87 +103,60 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <polyline points="6 9 12 15 18 9" />
             </svg>
           </div>
-          <span class="brand-name">Crimson VPN</span>
-        </div>
-        <a
-          class="settings-btn"
-          href="options.html"
-          target="_blank"
-          title="Settings"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="3" />
-            <path
-              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-            />
-          </svg>
-        </a>
-      </div>
-
-      <!-- Hero -->
-      <div class="hero">
-        <button class="connect-btn" id="connectBtn">
-          <div class="connect-ring outer"></div>
-          <div class="connect-ring inner"></div>
-          <div class="connect-core">
-            <svg
-              class="power-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-              <line x1="12" y1="2" x2="12" y2="12" />
-            </svg>
+          <div class="dropdown-panel" id="dropdownPanel">
+            <div class="panel-search-wrap">
+              <svg
+                class="panel-search-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                class="panel-search"
+                id="panelSearch"
+                type="text"
+                placeholder="Search…"
+                autocomplete="off"
+              />
+            </div>
+            <div class="panel-list" id="panelList"></div>
           </div>
-        </button>
-        <div class="status-label" id="statusLabel">Tap to connect</div>
-        <div class="selected-location" id="selectedLocation">
-          <span id="selectedFlag"></span>
-          <span id="selectedName">No location selected</span>
         </div>
       </div>
+      <!-- /viewMain -->
 
-      <!-- Location picker -->
-      <div class="picker-section">
-        <div class="picker-label">Choose Location</div>
-
-        <!-- Custom dropdown trigger -->
-        <div class="dropdown-trigger" id="dropdownTrigger">
-          <span class="trigger-flag" id="triggerFlag"></span>
-          <span class="trigger-name" id="triggerName">Select a location…</span>
-          <svg
-            class="trigger-chevron"
-            id="triggerChevron"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
-
-        <!-- Dropdown panel -->
-        <div class="dropdown-panel" id="dropdownPanel">
-          <div class="panel-search-wrap">
+      <!-- ═══════════════════════════════════ -->
+      <!--  VIEW: LOGIN                        -->
+      <!-- ═══════════════════════════════════ -->
+      <div id="viewLogin" class="view-hidden">
+        <!-- Login top bar -->
+        <div class="topbar">
+          <div class="topbar-brand">
+            <div class="shield-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <span class="brand-name">Crimson VPN</span>
+          </div>
+          <button class="back-btn" id="backBtn">
             <svg
-              class="panel-search-icon"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -113,20 +164,79 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              <polyline points="15 18 9 12 15 6" />
             </svg>
+            Back
+          </button>
+        </div>
+
+        <!-- Login card -->
+        <div class="login-card">
+          <div class="login-logo">
+            <div class="shield-icon login-shield">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+          </div>
+          <h2 class="login-title">Login</h2>
+
+          <div class="login-error" id="loginError"></div>
+
+          <div class="input-group">
             <input
-              class="panel-search"
-              id="panelSearch"
-              type="text"
-              placeholder="Search…"
-              autocomplete="off"
+              class="login-input"
+              id="emailInput"
+              type="email"
+              placeholder="Email"
+              autocomplete="email"
             />
           </div>
-          <div class="panel-list" id="panelList"></div>
+
+          <div class="input-group">
+            <input
+              class="login-input"
+              id="passwordInput"
+              type="password"
+              placeholder="Password"
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button class="login-submit" id="loginSubmitBtn">
+            <span id="loginBtnText">Login</span>
+            <svg
+              class="login-spinner"
+              id="loginSpinner"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+          </button>
+
+          <div class="login-footer">
+            <button class="login-link" id="createAccountBtn">
+              Create Account
+            </button>
+            <button class="login-link" id="resetPasswordBtn">
+              Reset Password
+            </button>
+          </div>
         </div>
       </div>
+      <!-- /viewLogin -->
     </div>
     <script src="popup.js"></script>
   </body>

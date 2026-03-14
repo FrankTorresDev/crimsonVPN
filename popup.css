@@ -27,8 +27,8 @@
 
   /* Text */
   --text:      #f5eeee;
-  --text-sub:  #9e8888;
-  --text-muted:#5e4a4a;
+  --text-sub:  #c9a8a8;
+  --text-muted:#9e7a7a;
 
   --r: 12px;
 }
@@ -336,4 +336,191 @@ body {
 .panel-empty {
   padding: 20px; text-align: center;
   color: var(--text-muted); font-size: 13px;
+}
+
+
+/* ─── View switching ────────────────────── */
+.view-hidden { display: none !important; }
+
+/* ─── Topbar actions group ──────────────── */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ─── Login nav button (topbar) ─────────── */
+.login-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 7px;
+  border: 1px solid rgba(220,38,38,0.5);
+  background: rgba(220,38,38,0.1);
+  color: var(--accent-bright);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.login-btn:hover {
+  background: rgba(220,38,38,0.2);
+  border-color: rgba(220,38,38,0.75);
+  color: #fff;
+}
+
+/* ─── Back button ───────────────────────── */
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 6px;
+  border-radius: 7px;
+  transition: color 0.15s, background 0.15s;
+}
+.back-btn:hover { color: var(--text); background: var(--surface2); }
+.back-btn svg { width: 15px; height: 15px; }
+
+/* ─── Login card ────────────────────────── */
+.login-card {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.login-shield {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 13px !important;
+  box-shadow: 0 0 24px var(--accent-glow) !important;
+}
+.login-shield svg { width: 26px !important; height: 26px !important; }
+
+.login-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+/* Error message */
+.login-error {
+  display: none;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.3);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: var(--red);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.login-error.visible { display: block; }
+
+/* Input group */
+.input-group {
+  margin-bottom: 12px;
+}
+
+.login-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid rgba(220,38,38,0.35);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.login-input::placeholder { color: var(--text-muted); }
+.login-input:focus {
+  border-color: rgba(220,38,38,0.7);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.12);
+}
+
+/* Submit button */
+.login-submit {
+  width: 100%;
+  margin-top: 4px;
+  padding: 13px;
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 0 20px rgba(220,38,38,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+.login-submit:hover {
+  background: #b91c1c;
+  box-shadow: 0 0 28px rgba(220,38,38,0.55);
+  transform: translateY(-1px);
+}
+.login-submit:active { transform: translateY(0); }
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner inside submit */
+.login-spinner {
+  width: 16px; height: 16px;
+  display: none;
+  animation: spin 0.7s linear infinite;
+}
+.login-submit.loading .login-spinner { display: block; }
+.login-submit.loading #loginBtnText { opacity: 0.5; }
+
+/* Footer links */
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+.login-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color 0.15s;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: transparent;
+}
+.login-link:hover {
+  color: var(--accent-bright);
+  text-decoration-color: rgba(248,113,113,0.4);
 }
